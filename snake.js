@@ -2,13 +2,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const board = document.getElementById('game-board');
     const width = 20;
     const height = 20;
-    let snake = [{ x: 10, y: 10 }];
+    let snakeBody= [{ x: 10, y: 10 }];
     let food = { x: 15, y: 15 };
-    let movexaxis = 0;
-    let moveyaxis = 0;
+    let moveX = 0;
+    let moveY = 0;
     let intervalId;
 
-    const isSnake =(x, y) => { return snake.some((segment) => segment.x === x && segment.y === y);}
+    const isSnake =(x, y) => snake.some((segment) => segment.x === x && segment.y === y);
 
     const drawGameBoard = () => {
         board.innerHTML = '';
@@ -28,42 +28,42 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function moveSnake() {
-        const head = { x: snake[0].x + movexaxis, y: snake[0].y + moveyaxis };
+        const snakeHead = { x: snakeBody[0].x + moveX, y: snakeBody[0].y + moveY };
 
-        snake.unshift(head);
+        snakeBody.unshift(snakeHead);
 
-        if (head.x === food.x && head.y === food.y) {
+        if (snakeHead.x === food.x && snakeHead.y === food.y) {
             food.x = Math.floor(Math.random() * width);
             food.y = Math.floor(Math.random() * height);
         } else {
-            snake.pop();
+            snakeBody.pop();
         }
     }
 
     function handleKeyPress(event) {
         switch (event.key) {
             case 'ArrowUp':
-                if (moveyaxis !== 1) { movexaxis = 0; moveyaxis = -1; }
+                if (moveY !== 1) { moveX = 0; moveY = -1; }
                 break;
             case 'ArrowDown':
-                if (moveyaxis !== -1) { movexaxis = 0; moveyaxis = 1; }
+                if (moveY !== -1) { moveX = 0; moveY = 1; }
                 break;
             case 'ArrowLeft':
-                if (movexaxis !== 1) { movexaxis = -1; moveyaxis = 0; }
+                if (moveX !== 1) { moveX = -1; moveY = 0; }
                 break;
             case 'ArrowRight':
-                if (movexaxis !== -1) { movexaxis = 1; moveyaxis = 0; }
+                if (moveX !== -1) { moveX = 1; moveY = 0; }
                 break;
         }
     }
 
     function checkCollision() {
-        const head = snake[0];
+        const snakeHead = snakeBody[0];
 
         return (
-            head.x < 0 || head.x >= width ||
-            head.y < 0 || head.y >= height ||
-            snake.slice(1).some(segment => segment.x === head.x && segment.y === head.y)
+            snakeHead.x < 0 || snakeHead.x >= width ||
+            snakeHead.y < 0 || snakeHead.y >= height ||
+            snakeBody.slice(1).some(segment => segment.x === snakeHead.x && segment.y === snakeHead.y)
         );
     }
 
