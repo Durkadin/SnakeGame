@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let moveY = 0;
     let intervalId;
 
-    const isSnake =(x, y) => snake.some((segment) => segment.x === x && segment.y === y);
+    const isSnake =(x, y) => snakeBody.some((segment) => segment.x === x && segment.y === y);
 
     const drawGameBoard = () => {
         board.innerHTML = '';
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 cell.classList.add('cell');
                 if (isSnake(x, y)) {
-                    cell.classList.add('snake');
+                    cell.classList.add('snakeBody');
                 } else if (x === food.x && y === food.y) {
                     cell.classList.add('food');
                 }
